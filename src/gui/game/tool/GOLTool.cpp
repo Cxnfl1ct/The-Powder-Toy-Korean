@@ -44,7 +44,7 @@ GOLWindow::GOLWindow(GameModel &gameModel_, int toolSelection, int rule, RGB<uin
 {
 	highColour.Alpha = 255;
 	lowColour.Alpha = 255;
-	ui::Label * messageLabel = new ui::Label(ui::Point(4, 5), ui::Point(Size.X-8, 14), "사용자 지정 생명 게임 편집");
+	ui::Label * messageLabel = new ui::Label(ui::Point(4, 5), ui::Point(Size.X-8, 14), "사용자 지정 GOL 편집");
 	messageLabel->SetTextColour(style::Colour::InformationTitle);
 	messageLabel->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
 	messageLabel->Appearance.VerticalAlign = ui::Appearance::AlignTop;
@@ -135,19 +135,19 @@ void GOLWindow::validate()
 	auto ruleString = ruleField->GetText();
 	if (!ValidateGOLName(nameString))
 	{
-		new ErrorMessage("새 생명 게임을 추가할 수 없음", "잘못된 이름이 입력되었습니다.");
+		new ErrorMessage("새 GOL 규칙을 추가할 수 없음", "잘못된 이름이 입력되었습니다.");
 		return;
 	}
 	nameString = nameString.ToUpper();
 	int rule = ParseGOLString(ruleString);
 	if (rule == -1)
 	{
-		new ErrorMessage("새 생명 게임을 추가할 수 없음", "잘못된 규칙이 입력되었습니다.");
+		new ErrorMessage("새 GOL 규칙을 추가할 수 없음", "잘못된 규칙이 입력되었습니다.");
 		return;
 	}
 	if (sd.GetCustomGOLByRule(rule))
 	{
-		new ErrorMessage("새 생명 게임을 추가할 수 없음", "이 생명 게임은 이미 존재합니다.");
+		new ErrorMessage("새 GOL 규칙을 추가할 수 없음", "이 GOL 규칙은 이미 존재합니다.");
 		return;
 	}
 	ruleString = SerialiseGOLRule(rule); // * Make it canonical.
@@ -161,7 +161,7 @@ void GOLWindow::validate()
 
 	if (!gameModel.AddCustomGol(ruleString, nameString, highColour.NoAlpha(), lowColour.NoAlpha()))
 	{
-		new ErrorMessage("새 생명 게임을 추가할 수 없음", "이 이름을 이미 사용하였습니다.");
+		new ErrorMessage("새 GOL 규칙을 추가할 수 없음", "이 이름을 이미 사용하였습니다.");
 		return;
 	}
 
